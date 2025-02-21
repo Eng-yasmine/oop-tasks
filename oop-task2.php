@@ -13,22 +13,21 @@ class Product
     public $description;
     public $image;
 
-    public function  __construct($name = ""  , $price  =  "", $description = "" , $image = "" )
+    public function  __construct($name = "", $price  =  "", $description = "", $image = "")
     {
-        $this->name=$name;
-        $this->price=$price;
-        $this->description=$description;
+        $this->name = $name;
+        $this->price = $price;
+        $this->description = $description;
         $this->image = $image;
-       
-    } 
-        
-    
+    }
+
+
 
     public function upload_image()
     {
-      
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-           
+
             if (isset($_FILES['image'])  && is_array($_FILES['image']['name'])) {
                 /*  echo "<pre>" ;
         var_dump($_FILES); 
@@ -37,7 +36,7 @@ class Product
                     // var_dump($_FILES['image']['name'][$key]);
                     $tmp = $_FILES['image']['tmp_name'][$key];
                     // var_dump($tmp);
-                   $this->image = $_FILES['image']['name'][$key];
+                    $this->image = $_FILES['image']['name'][$key];
                     if (move_uploaded_file($tmp, "images/" . $this->image)) {
                         echo " uploaded success";
                     } else {
@@ -48,10 +47,10 @@ class Product
         }
     }
 
-    public function calc_price($price){
+    public function calc_price($price)
+    {
 
-         return $this->price = $price ;
-
+        return $this->price = $price;
     }
 }
 
@@ -59,34 +58,35 @@ class Product
 // child class Book
 class Book extends Product
 {
-   private $puplishers = [];
+    private $puplishers = [];
     public $writer;
     public $color;
     public $supplier;
 
-    public function set_publisher($puplishers) {
-if(is_array($puplishers)){
-    foreach($puplishers as $puplisher){
-        $this->puplishers[] = $puplisher ; 
+    public function set_publisher($puplishers)
+    {
+        if (is_array($puplishers)) {
+            foreach ($puplishers as $puplisher) {
+                $this->puplishers[] = $puplisher;
+            }
+        }
     }
-}
-      
+    public function choose_publisher()
+    {
+        $this->puplishers;
+        if (empty($this->puplishers)) {
+            echo "no publishers added";
+        } else {
+            $random_puplisher = array_rand($this->puplishers);
+            var_dump($random_puplisher);
+        }
+    }
+
+
+    public function show_all_publishers() {
+
         
     }
-    public function choose_publisher() {
-       $this->puplishers ;
-       if(empty($this->puplishers)){
-        echo "no publishers added";
-       }else{
-       $random_puplisher = array_rand( $this->puplishers);
-       var_dump($random_puplisher);
-       }
-
-
-    }
-
-
-    public function show_all_publishers() {}
 }
 
 
@@ -104,7 +104,7 @@ class BabyCar extends Product
     public function get_final_price() {}
 }
 
-$product = new Product("php book" ,"500" ,"programming" );
+$product = new Product("php book", "500", "programming");
 $product->name = "pic";
 $product->upload_image();
 $book = new Book();
